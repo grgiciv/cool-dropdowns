@@ -8,10 +8,14 @@ const selectOptions = [
 ];
 
 const settings = {
-  theme: "dark", // light, dark
+  theme: "light", // light, dark
   search: true, // will enable search input in dropdown and search values
   multiSelect: false, // will enable multi selection of values
+  dropdownButtonLabel: "Vegetables",
 };
+//const {theme, search, dropdownButtonLabel, multiSelect} = settings;
+
+const selectValues = [];
 
 function createOptions(options, location) {
   options.forEach((option) => {
@@ -19,12 +23,32 @@ function createOptions(options, location) {
     dropdownOption.setAttribute("value", option.value);
     dropdownOption.innerText = option.label;
     dropdownOption.classList.add(settings.theme);
+    dropdownOption.addEventListener("click", () => {
+      if (!dropdownOption.classList.contains("selected")) {
+        dropdownOption.classList.add("selected");
+        let selectedOptions = document.getElementsByClassName("selected");
+        let values = Object.values(selectedOptions);
+        selectValues.splice(0);
+        values.forEach((item) => selectValues.push(item.value));
+        console.log(selectedOptions, values, selectValues);
+      } else {
+        dropdownOption.classList.remove("selected");
+        let selectedOptions = document.getElementsByClassName("selected");
+        let values = Object.values(selectedOptions);
+        selectValues.splice(0);
+        values.forEach((item) => selectValues.push(item.value));
+        console.log(selectedOptions, values, selectValues);
+      }
+    });
     location.appendChild(dropdownOption);
   });
 }
 
+function getValues(selector) {}
+
 function create(selector, options, settings) {
   const createAt = document.getElementById(selector);
+  createAt.style.width = "200px";
   const dropdown = document.createElement("ul");
   dropdown.style.display = "none";
 
@@ -33,10 +57,12 @@ function create(selector, options, settings) {
   dropdown.insertAdjacentElement("afterbegin", searchInput);
 
   const dropButton = document.createElement("button");
-  dropButton.innerText = "Dropdown";
-  settings.search
+  dropButton.innerText = settings.dropdownButtonLabel;
+
+  settings.search //displays search input filed
     ? (searchInput.style.display = "")
     : (searchInput.style.display = "none");
+
   dropButton.addEventListener("click", () => {
     if (dropdown.style.display === "none") {
       dropdown.style.display = "";
@@ -49,7 +75,6 @@ function create(selector, options, settings) {
 
   if (settings.search) {
     createOptions(options, dropdown);
-
     searchInput.addEventListener("keyup", () => {
       let listItems = dropdown.querySelectorAll("li");
       for (let i = 0; i < listItems.length; i++) {
