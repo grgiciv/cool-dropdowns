@@ -30,10 +30,6 @@
   box-shadow: 0px 0px 2px darkblue;
 }
 
-button {
-  width: 200px;
-}
-
 .selected {
   background-color: yellowgreen;
 }

@@ -6,6 +6,14 @@ const selectOptions = [
   // ... more options
 ];
 
+const select = [
+  { value: "11", label: "kva" },
+  { value: "22", label: "la" },
+  { value: "33", label: "h" },
+  { value: "44", label: "prika" },
+  // ... more options
+];
+
 const styling = {
   li: "margin: 5px; list-style: none; border-radius: 5px; padding-left: 10px; text-align: center;",
   ul: "display: flex; flex-flow: column nowrap; margin: 0px; padding-left: 0;",
@@ -19,10 +27,12 @@ const settings = {
 };
 //const {theme, search, dropdownButtonLabel, multiSelect} = settings;
 
-const selectValues = [];
-let selectValue = null;
+// const selectValues = [];
+// let selectValue = null;
 
-function createOptions(options, location) {
+function createOptions(options, location, selector) {
+  const selectValues = [];
+  let selectValue = null;
   options.forEach((option) => {
     let dropdownOption = document.createElement("li");
     dropdownOption.style.cssText = styling.li;
@@ -37,14 +47,14 @@ function createOptions(options, location) {
           let values = Object.values(selectedOptions);
           selectValues.splice(0);
           values.forEach((item) => selectValues.push(item.value));
-          console.log(selectedOptions, values, selectValues);
+          getValues(selector, selectValues);
         } else {
           dropdownOption.classList.remove("selected");
           let selectedOptions = document.getElementsByClassName("selected");
           let values = Object.values(selectedOptions);
           selectValues.splice(0);
           values.forEach((item) => selectValues.push(item.value));
-          console.log(selectedOptions, "<EEE", values, selectValues);
+          getValues(selector, selectValues);
         }
       } else {
         let selectedOptions = document.getElementsByClassName("selected");
@@ -53,11 +63,11 @@ function createOptions(options, location) {
         if (!event.target.classList.contains("selected")) {
           event.target.classList.add("selected");
           selectValue = event.target.value;
-          console.log(selectValue);
+          getValues(selector, selectValue);
         } else {
           event.target.classList.remove("selected");
           selectValue = null;
-          console.log(selectValue);
+          getValues(selector, selectValue);
         }
       }
     });
@@ -65,7 +75,20 @@ function createOptions(options, location) {
   });
 }
 
-function getValues(selector) {}
+function getValues(selector, values) {
+  console.log(selector, "FFFF");
+  if (settings.multiSelect) {
+    console.log(
+      `Selected values of dropdown menu with id "${selector.id}"  are ${values}`
+    );
+    return values;
+  } else {
+    console.log(
+      `Selected values of dropdown menu with id "${selector.id}"  are ${values}`
+    );
+    return values;
+  }
+}
 
 function create(selector, options, settings) {
   const createAt = document.getElementById(selector);
@@ -79,6 +102,7 @@ function create(selector, options, settings) {
   dropdown.insertAdjacentElement("afterbegin", searchInput);
 
   const dropButton = document.createElement("button");
+  dropButton.style.cssText = styling.button;
   dropButton.innerText = settings.dropdownButtonLabel;
 
   settings.search //displays search input filed
@@ -112,8 +136,9 @@ function create(selector, options, settings) {
       }
     });
   } else {
-    createOptions(options, dropdown);
+    createOptions(options, dropdown, createAt);
   }
 }
 
 create("dropdown", selectOptions, settings);
+create("drp", selectOptions, settings);
