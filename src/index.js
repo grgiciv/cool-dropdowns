@@ -1,3 +1,5 @@
+import "./style.css";
+
 const selectOptions = [
   { value: "1", label: "Mrkva" },
   { value: "2", label: "Cikla" },
@@ -140,5 +142,7 @@ function create(selector, options, settings) {
   }
 }
 
-create("dropdown", selectOptions, settings);
-create("drp", selectOptions, settings);
+// create("dropdown", selectOptions, settings);
+// create("drp", selectOptions, settings);
+
+export default create;
