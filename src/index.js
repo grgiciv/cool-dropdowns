@@ -16,11 +16,6 @@ const select = [
   // ... more options
 ];
 
-const styling = {
-  li: "margin: 5px; list-style: none; border-radius: 5px; padding-left: 10px; text-align: center;",
-  ul: "display: flex; flex-flow: column nowrap; margin: 0px; padding-left: 0;",
-};
-
 const settings = {
   theme: "dark", // light, dark
   search: false, // will enable search input in dropdown and search values
@@ -37,7 +32,7 @@ function createOptions(options, location, selector) {
   let selectValue = null;
   options.forEach((option) => {
     let dropdownOption = document.createElement("li");
-    dropdownOption.style.cssText = styling.li;
+
     dropdownOption.setAttribute("value", option.value);
     dropdownOption.innerText = option.label;
     dropdownOption.classList.add(settings.theme);
@@ -96,7 +91,7 @@ function create(selector, options, settings) {
   const createAt = document.getElementById(selector);
   createAt.style.width = "200px";
   const dropdown = document.createElement("ul");
-  dropdown.style.cssText = styling.ul;
+
   dropdown.style.display = "none";
 
   const searchInput = document.createElement("input");
@@ -104,7 +99,7 @@ function create(selector, options, settings) {
   dropdown.insertAdjacentElement("afterbegin", searchInput);
 
   const dropButton = document.createElement("button");
-  dropButton.style.cssText = styling.button;
+
   dropButton.innerText = settings.dropdownButtonLabel;
 
   settings.search //displays search input filed
